@@ -90,7 +90,8 @@
   <div id="lb-top">
     <div id="lb-title"></div>
     <div id="lb-nav">
-      <a class="btn" id="lb-dl" href="#">Download</a>
+      <button class="btn" id="lb-share">Share</button>
+      <a class="btn btn2" id="lb-dl" href="#">Download</a>
       <button class="btn btn2" id="lb-prev">‹</button>
       <button class="btn btn2" id="lb-next">›</button>
       <button class="btn btn2" id="lb-close">✕</button>
@@ -211,6 +212,26 @@ document.getElementById('lb-close').onclick=()=>{lb.classList.remove('on');lbi.s
 document.getElementById('lb-prev').onclick=e=>{e.stopPropagation();openLB(lbIdx-1);};
 document.getElementById('lb-next').onclick=e=>{e.stopPropagation();openLB(lbIdx+1);};
 lb.onclick=e=>{if(e.target===lb){lb.classList.remove('on');lbi.src='';}};
+
+// hand the image to the OS share sheet (Files, Copy, Procreate, …) when the
+// browser supports file sharing (iPadOS 15+ over https); else download
+async function shareCurrent(){
+  const it=items[lbIdx]; if(!it) return;
+  try{
+    const r=await fetch('/img/'+it.id);
+    const b=await r.blob();
+    const fname=(it.name||it.id)+'.'+(it.ext||'png');
+    const f=new File([b],fname,{type:b.type||'application/octet-stream'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){
+      await navigator.share({files:[f],title:fname});
+    }else{
+      const a=document.createElement('a');a.href=URL.createObjectURL(b);
+      a.download=fname;a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),15000);
+    }
+  }catch(e){}
+}
+document.getElementById('lb-share').onclick=e=>{e.stopPropagation();shareCurrent();};
 
 loadMeta().then(reload);
 </script>
