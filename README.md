@@ -1,5 +1,7 @@
 # Eagle Share
 
+![Eagle Share](docs/cover.png)
+
 An Eagle plugin that makes your open library browsable from any device on your
 local network — an Eagle-style web gallery served straight out of the app.
 
