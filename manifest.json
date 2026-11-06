@@ -1,0 +1,24 @@
+{
+    "id": "37079b27-353b-4ef6-b22f-7c11dd645e23",
+    "version": "1.0.0",
+    "platform": "all",
+    "arch": "all",
+    "name": "Eagle Share",
+    "logo": "/logo.png",
+    "keywords": ["share", "lan", "gallery", "network", "web"],
+    "devTools": false,
+    "main": {
+        "serviceMode": true,
+        "childWindow": true,
+        "runAfterInstall": true,
+        "url": "index.html",
+        "width": 480,
+        "minWidth": 420,
+        "height": 640,
+        "minHeight": 480,
+        "resizable": true,
+        "frame": false,
+        "vibrancy": true,
+        "opacity": 1
+    }
+}

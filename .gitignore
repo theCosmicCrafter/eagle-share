@@ -1,0 +1,5 @@
+index_cache.json
+config.json
+window-state.json
+*.eagleplugin
+node_modules/

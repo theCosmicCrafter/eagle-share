@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eagle Share</title>
+<style>
+  :root { --bg:#1c1c1e; --panel:#262628; --hover:#323235; --text:#e8e8ea;
+          --dim:#9a9aa0; --accent:#4f8ef7; --ok:#34c759; --err:#ff453a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,"Segoe UI",sans-serif;
+         padding:20px; }
+  h1 { font-size:17px; font-weight:600; margin-bottom:2px; }
+  .sub { font-size:12px; color:var(--dim); margin-bottom:16px; }
+  .card { background:var(--panel); border-radius:10px; padding:14px 16px; margin-bottom:12px; }
+  .row { display:flex; align-items:center; gap:10px; }
+  .dot { width:10px; height:10px; border-radius:50%; background:#666; flex-shrink:0; }
+  .dot.on { background:var(--ok); box-shadow:0 0 8px var(--ok); }
+  .dot.ext { background:#ffcc00; box-shadow:0 0 8px #ffcc00; }
+  #state { font-size:14px; font-weight:600; }
+  #stateSub { font-size:12px; color:var(--dim); margin-top:2px; }
+  #url { font-family:ui-monospace,Consolas,monospace; font-size:14px; color:var(--accent);
+         cursor:pointer; word-break:break-all; user-select:all; margin-top:6px; }
+  #url:hover { text-decoration:underline; }
+  #qrbox { display:flex; justify-content:center; padding:10px 0 4px; }
+  #qr { background:#fff; border-radius:8px; padding:8px; image-rendering:pixelated; display:none; }
+  .stats { display:flex; gap:16px; font-size:12px; color:var(--dim); margin-top:8px; flex-wrap:wrap; }
+  .stats b { color:var(--text); font-weight:600; }
+  label { font-size:12px; color:var(--dim); display:block; margin-bottom:5px; }
+  input[type=text],input[type=password],input[type=number] {
+         width:100%; padding:8px 10px; border-radius:8px; border:1px solid #3a3a3d;
+         background:#1c1c1e; color:var(--text); font-size:14px; }
+  .btn { background:var(--accent); color:#fff; border:0; border-radius:8px;
+         padding:9px 18px; font-size:14px; cursor:pointer; }
+  .btn2 { background:var(--hover); color:var(--text); }
+  .btnrow { display:flex; gap:8px; margin-top:12px; }
+  .btnrow .btn { flex:1; }
+  .fieldrow { display:flex; gap:8px; align-items:flex-end; }
+  .fieldrow>div { flex:1; }
+  .fieldrow .btn { white-space:nowrap; padding:8px 14px; }
+  #msg { font-size:12px; min-height:16px; margin-top:10px; color:var(--dim); }
+  #msg.err { color:var(--err); }
+  #msg.ok { color:var(--ok); }
+  .hint { font-size:11px; color:var(--dim); margin-top:6px; line-height:1.4; }
+  hr { border:0; border-top:1px solid #333; margin:14px 0; }
+</style>
+</head>
+<body>
+  <h1>Eagle Share</h1>
+  <div class="sub">LAN gallery for this library</div>
+
+  <div class="card">
+    <div class="row">
+      <div class="dot" id="dot"></div>
+      <div>
+        <div id="state">Checking…</div>
+        <div id="stateSub"></div>
+      </div>
+    </div>
+    <div id="url" title="Click to copy"></div>
+    <div id="qrbox"><canvas id="qr" width="176" height="176"></canvas></div>
+    <div class="stats">
+      <span>Items <b id="sItems">—</b></span>
+      <span>Scan <b id="sScan">—</b></span>
+      <span>PIN <b id="sPin">—</b></span>
+      <span>Library <b id="sLib">—</b></span>
+    </div>
+    <div class="btnrow">
+      <button class="btn" id="bStart">Start sharing</button>
+      <button class="btn btn2" id="bStop">Stop</button>
+    </div>
+    <div id="msg"></div>
+  </div>
+
+  <div class="card">
+    <div class="fieldrow">
+      <div><label>Port</label><input id="inPort" type="number" value="8321" min="1" max="65535"></div>
+      <button class="btn btn2" id="bPort">Apply</button>
+    </div>
+    <hr>
+    <div class="fieldrow">
+      <div><label>PIN (blank = open on LAN)</label><input id="inPin" type="password" placeholder="optional"></div>
+      <button class="btn btn2" id="bPin">Set</button>
+      <button class="btn btn2" id="bPinClear">Clear</button>
+    </div>
+    <div class="hint">Bound to your LAN interface only — nothing is exposed to the
+      internet or VPN tunnel. First start may trigger a one-time Windows Firewall
+      prompt for Eagle — choose Allow on private networks.</div>
+  </div>
+
+<script src="js/qrcode.js"></script>
+<script src="js/service.js"></script>
+<script src="js/panel.js"></script>
+</body>
+</html>
