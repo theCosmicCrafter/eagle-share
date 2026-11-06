@@ -23,8 +23,9 @@ local network — an Eagle-style web gallery served straight out of the app.
 3. Click it → **Start sharing**
 4. One-time Windows Firewall prompt may appear — allow on **Private networks**
 
-Open the shown URL (e.g. `http://192.168.1.50:8321`) from any device on the
-same network, or scan the QR code.
+Open the URL shown in the panel — `http://<your-LAN-IP>:8321` — from any
+device on the same network, or scan the QR code. The plugin detects your
+machine's LAN address automatically; nothing to configure.
 
 ## Privacy
 
